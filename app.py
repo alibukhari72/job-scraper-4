@@ -1,11 +1,31 @@
-from scraper import scrape_jobs
 from flask import Flask
+import requests
+from bs4 import BeautifulSoup
+
 app = Flask(_name_)
 
+def scrape_jobs():
+    # Example scraper - replace with your actual scraping logic
+    url = "https://remoteok.io/remote-dev-jobs"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    
+    jobs = []
+    # This example grabs job titles from RemoteOK - update selectors as needed
+    for job in soup.find_all('tr', class_='job'):
+        title = job.find('h2', itemprop='title')
+        company = job.find('h3', itemprop='name')
+        if title and company:
+            jobs.append({
+                'title': title.text.strip(),
+                'company': company.text.strip()
+            })
+    return jobs
+
 @app.route('/')
-def run_scraper():
-    # 🟢 Import and run your scraper function here
-    result = scrape_jobs()  # replace with your actual scraper function name
-    return f"Scraping done. Found {len(result)} jobs."
+def home():
+    jobs = scrape_jobs()
+    return f"Scraping complete. Found {len(jobs)} jobs."
+
 if _name_ == '_main_':
     app.run(host='0.0.0.0', port=5000)
