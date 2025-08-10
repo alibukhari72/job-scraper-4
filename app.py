@@ -2,7 +2,7 @@ from flask import Flask
 import requests
 from bs4 import BeautifulSoup
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 def scrape_jobs():
     url = "https://remoteok.io/remote-dev-jobs"  # Change if needed
@@ -27,5 +27,5 @@ def home():
     jobs = scrape_jobs()
     return f"Scraping complete. Found {len(jobs)} jobs."
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
