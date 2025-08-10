@@ -26,5 +26,5 @@ def home():
     jobs = scrape_jobs()
     return f"Scraping complete. Found {len(jobs)} jobs."
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
