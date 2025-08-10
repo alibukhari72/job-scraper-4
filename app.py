@@ -2,10 +2,10 @@ from flask import Flask
 import requests
 from bs4 import BeautifulSoup
 
-app = Flask(__name__)
+app = Flask(_name_)
 
 def scrape_jobs():
-    url = "https://remoteok.io/remote-dev-jobs"
+    url = "https://remoteok.io/remote-dev-jobs"  # Change if needed
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -13,12 +13,13 @@ def scrape_jobs():
     for job in soup.find_all('tr', class_='job'):
         title = job.find('h2', itemprop='title')
         company = job.find('h3', itemprop='name')
+        print("Checking job:", title)  # Debug print
         if title and company:
             jobs.append({
                 'title': title.text.strip(),
                 'company': company.text.strip()
             })
-    print(f"Scraped {len(jobs)} jobs")  # Debug line
+    print(f"Total jobs found: {len(jobs)}")
     return jobs
 
 @app.route('/')
@@ -26,5 +27,5 @@ def home():
     jobs = scrape_jobs()
     return f"Scraping complete. Found {len(jobs)} jobs."
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run(host='0.0.0.0', port=5000)
