@@ -5,13 +5,11 @@ from bs4 import BeautifulSoup
 app = Flask(_name_)
 
 def scrape_jobs():
-    # Example scraper - replace with your actual scraping logic
     url = "https://remoteok.io/remote-dev-jobs"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
-    
+
     jobs = []
-    # This example grabs job titles from RemoteOK - update selectors as needed
     for job in soup.find_all('tr', class_='job'):
         title = job.find('h2', itemprop='title')
         company = job.find('h3', itemprop='name')
@@ -20,6 +18,7 @@ def scrape_jobs():
                 'title': title.text.strip(),
                 'company': company.text.strip()
             })
+    print(f"Scraped {len(jobs)} jobs")  # Debug line
     return jobs
 
 @app.route('/')
