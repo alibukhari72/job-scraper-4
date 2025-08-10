@@ -1,10 +1,8 @@
 from flask import Flask
-
-app = Flask(__name__)
+app = Flask(_name_)
 
 @app.route('/')
-def home():
-    return "🚀 Job Hunter Backend is Running Successfully!"
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+def run_scraper():
+    # 🟢 Import and run your scraper function here
+    result = scrape_jobs()  # replace with your actual scraper function name
+    return f"Scraping done. Found {len(result)} jobs."
