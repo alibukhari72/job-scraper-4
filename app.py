@@ -2,7 +2,7 @@ from flask import Flask
 import requests
 from bs4 import BeautifulSoup
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 def scrape_jobs():
     url = "https://remoteok.io/remote-dev-jobs"
